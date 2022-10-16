@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const Transaction = () => {
   const people = [
@@ -27,6 +28,17 @@ const Transaction = () => {
       role: "Member",
     },
   ];
+  const [transaction, setTransaction] = useState<any[]>([]);
+
+  useEffect(() => {
+    const Trans = async () => {
+      const { data } = await axios.get("/api/trans");
+      console.log(data);
+
+      setTransaction(data.transactions);
+    };
+    Trans();
+  }, []);
   return (
     <>
       <div className="flex flex-col justify-center w-full items-center">
@@ -76,23 +88,27 @@ const Transaction = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {people.map((person) => (
-                      <tr key={person.email}>
+                    {transaction.map((trans) => (
+                      <tr key={trans.session_id}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                          {person.name}
+                          {trans.session_id.slice(0, 4) +
+                            "..." +
+                            trans.session_id.slice(-4)}
                         </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {person.title}
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                          {trans.status}
                         </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {person.email}
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                          {trans.amount}
                         </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {person.role}
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                          ------
                         </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {person.role}
+
+                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                          {trans.signature === null ? "-----" : trans.signature}
                         </td>
+
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <a
                             href="#"

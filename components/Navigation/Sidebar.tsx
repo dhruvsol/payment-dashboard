@@ -17,7 +17,7 @@ export const Sidebar = () => {
 
   return (
     <>
-      <div className="flex h-screen flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5 pb-4">
+      <div className=" h-screen flex-grow flex-col hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5 pb-4">
         <div className="flex flex-shrink-0 justify-start h-max items-center space-x-2  px-4">
           <Image
             src={"https://candypay.fun/logo.png"}

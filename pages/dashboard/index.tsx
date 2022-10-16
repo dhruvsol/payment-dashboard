@@ -1,5 +1,5 @@
-import React from "react";
 import { DocumentIcon } from "@heroicons/react/24/outline";
+import MainLayout from "../../layouts";
 const Dashboard = () => {
   return (
     <>

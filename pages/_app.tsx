@@ -1,15 +1,14 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Sidebar } from "../components/Navigation/Sidebar";
-import Layout from "../layouts/layout";
-import MainLayout from "../layouts";
+import { SessionProvider } from "next-auth/react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <MainLayout>
+      {/* @ts-ignore */}
+      <SessionProvider session={pageProps.session}>
         <Component {...pageProps} />
-      </MainLayout>
+      </SessionProvider>
     </>
   );
 }

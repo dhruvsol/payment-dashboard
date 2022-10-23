@@ -6,9 +6,10 @@ import {
   PublicKey,
 } from "@solana/web3.js";
 import axios from "axios";
+import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import MainLayout from "../../layouts";
-const Dashboard = () => {
+const Dashboard: NextPage = () => {
   const [transaction, setTransaction] = useState<any[]>([]);
   const [user, setUser] = useState<any>(null);
   const [balance, setbalance] = useState<any>(null);
@@ -40,37 +41,39 @@ const Dashboard = () => {
     };
     FetchBalance();
   }, [user?.wallet_address]);
+  console.log(transaction);
+
   return (
     <>
-      <div className="flex justify-center">
-        <div className="h-[13rem] w-[45rem] m-8 p-10  bg-pink-50 rounded-lg shadow-md ">
-          <div>
-            <p className="my-2 text-base">Total Balance</p>
-            <h1 className="text-4xl font-bold">
-              {balance === null ? "loading..." : balance + " SOL"}
-            </h1>
+      <MainLayout>
+        <div className="flex justify-center">
+          <div className="h-[13rem] w-[45rem] m-8 p-10  bg-pink-50 rounded-lg shadow-md ">
+            <div>
+              <p className="my-2 text-base">Total Balance</p>
+              <h1 className="text-4xl font-bold">
+                {balance === null ? "loading..." : balance + " SOL"}
+              </h1>
+            </div>
+            <button className="w-52 h-12 bg-violet-500 rounded mt-5 text-white font-bold">
+              Withdraw
+            </button>
           </div>
-          <button className="w-52 h-12 bg-violet-500 rounded mt-5 text-white font-bold">
-            Withdraw
-          </button>
-        </div>
-        <div className="h-[13rem] w-[25rem] m-8 p-10 bg-[#FEF0E8] rounded-lg ">
-          <DocumentIcon className="h-10 mb-4" />
-          <div className="cursor-pointer">
-            <h1 className="text-xl  font-bold">Need help ?</h1>
-            <p className="text-base text-gray-700">
-              Simple documentation for everything you might need
-            </p>
+          <div className="h-[13rem] w-[25rem] m-8 p-10 bg-[#FEF0E8] rounded-lg ">
+            <DocumentIcon className="h-10 mb-4" />
+            <div className="cursor-pointer">
+              <h1 className="text-xl  font-bold">Need help ?</h1>
+              <p className="text-base text-gray-700">
+                Simple documentation for everything you might need
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center gap-x-10 m-8">
-        <div className="h-[23rem] w-1/2    bg-gray-50 rounded-xl shadow border ">
+        <div className="h-[23rem] mx-8 px-10  overflow-scroll  bg-gray-50 rounded-xl shadow border ">
           <h1 className="text-3xl font-bold p-6">Payments</h1>
           {transaction.length != 0 ? (
             <>
               <div className="flex flex-col justify-center w-full items-center">
-                <div className="mt-8 flex flex-col w-[85%]">
+                <div className="mt-4 flex flex-col">
                   <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                       <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
@@ -137,11 +140,7 @@ const Dashboard = () => {
             <h1 className="text-center mt-20">Loading...</h1>
           )}
         </div>
-        <div className="h-[23rem] w-1/2  p-6  bg-gray-50 rounded-xl shadow border ">
-          <h1 className="text-3xl font-bold">Withdraw</h1>
-          <h1 className="text-center mt-32">No Data Found</h1>
-        </div>
-      </div>
+      </MainLayout>
     </>
   );
 };

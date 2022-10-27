@@ -18,6 +18,8 @@ const Dashboard: NextPage = () => {
   useEffect(() => {
     const Trans = async () => {
       const session = await supabase.auth.getSession();
+      console.log(session);
+
       const { data } = await axios.post("/api/trans", {
         token: session.data.session?.access_token,
       });
@@ -32,6 +34,7 @@ const Dashboard: NextPage = () => {
       const { data } = await axios.post("/api/user", {
         token: session.data.session?.access_token,
       });
+      setUser(data.metadata);
     };
     WalletAddress();
   }, []);

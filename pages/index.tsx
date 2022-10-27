@@ -30,7 +30,6 @@ const Home: NextPage = () => {
     });
     setApiKeys(data);
   };
-  console.log(apikeys);
   useEffect(() => {
     if (connected && apikeys === null) {
       getKey();
@@ -42,6 +41,8 @@ const Home: NextPage = () => {
       email: email,
       password: password,
     });
+    console.log(data);
+
     const token = await supabase.auth.getSession();
 
     const a = await axios
@@ -202,8 +203,8 @@ const Home: NextPage = () => {
           <>
             <div className="flex gap-4 mt-20 justify-center items-center flex-col">
               <h1>Your Api Keys are</h1>
-              <h1> private_api_key:- {apikeys.private_api_key}</h1>
-              <h1>private_api_key:- {apikeys.public_api_key}</h1>
+              <h1> private_api_key:- {apikeys?.private_api_key}</h1>
+              <h1>private_api_key:- {apikeys?.public_api_key}</h1>
 
               <button
                 onClick={() => {

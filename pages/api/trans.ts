@@ -5,11 +5,12 @@ export default async function Trans(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+  const { token } = req.body;
   const { data } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/transactions`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/dashboard/transactions`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+        Authorization: `Bearer ${token}`,
       },
     }
   );

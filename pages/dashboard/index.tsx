@@ -8,14 +8,19 @@ import {
 import axios from "axios";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
+import { supabase } from "../../config/supabase";
 import MainLayout from "../../layouts";
 const Dashboard: NextPage = () => {
   const [transaction, setTransaction] = useState<any[]>([]);
   const [user, setUser] = useState<any>(null);
   const [balance, setbalance] = useState<any>(null);
+
   useEffect(() => {
     const Trans = async () => {
-      const { data } = await axios.get("/api/trans");
+      const session = await supabase.auth.getSession();
+      const { data } = await axios.post("/api/trans", {
+        token: session.data.session?.access_token,
+      });
       setTransaction(data.transactions);
     };
     Trans();
@@ -23,8 +28,10 @@ const Dashboard: NextPage = () => {
 
   useEffect(() => {
     const WalletAddress = async () => {
-      const { data } = await axios.get("/api/user");
-      setUser(data.metadata);
+      const session = await supabase.auth.getSession();
+      const { data } = await axios.post("/api/user", {
+        token: session.data.session?.access_token,
+      });
     };
     WalletAddress();
   }, []);

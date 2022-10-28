@@ -86,7 +86,7 @@ const Settings: NextPage = () => {
           <div className="mt-10 ml-14">
             <div className="flex justify-start gap-10 items-center mb-10">
               <h1 className="text-2xl font-medium  ">
-                The Keys will be shown once do to security reasons
+                The Keys will be shown to you once due security reasons
               </h1>
               <button
                 onClick={() => {

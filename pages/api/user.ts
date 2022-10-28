@@ -17,7 +17,8 @@ export default async function User(
     );
     res.status(200).send(data);
   } catch (e: any) {
-    if (e.response.status === 400) {
+    console.log(e.response.status);
+    if (e.response.status === 404) {
       res.status(200).send({
         metadata: null,
       });

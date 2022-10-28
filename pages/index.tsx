@@ -20,9 +20,21 @@ const Home: NextPage = () => {
 
   const router = useRouter();
   const { connected, publicKey, signMessage } = useWallet();
+  const WalletAddress = async () => {
+    const session = await supabase.auth.getSession();
+    const { data } = await axios.post("/api/user", {
+      token: session.data.session?.access_token,
+    });
+    if (data.metadata === null) {
+      return null;
+    } else {
+      return data.metadata;
+    }
+  };
   const PostNewUser = async (sign: any) => {
     const user = await supabase.auth.getUser();
     const { data } = await supabase.auth.getSession();
+
     await axios
       .post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/onboard`,
@@ -51,9 +63,14 @@ const Home: NextPage = () => {
     });
   }
   useEffect(() => {
-    supabase.auth.onAuthStateChange((e) => {
+    supabase.auth.onAuthStateChange(async (e) => {
       if (e === "SIGNED_IN") {
-        setNewUserState("wallet-connet");
+        const res = await WalletAddress();
+        if (res !== null) {
+          return router.push("/dashboard");
+        } else {
+          setNewUserState("wallet-connet");
+        }
       }
     });
   }, []);

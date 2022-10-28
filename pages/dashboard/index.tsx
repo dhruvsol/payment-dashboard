@@ -24,6 +24,8 @@ const Dashboard: NextPage = () => {
         token: session.data.session?.access_token,
       });
       setTransaction(data.transactions);
+      setbalance(data.metadata.earned);
+      console.log(data.metadata);
     };
     Trans();
   }, []);
@@ -38,20 +40,20 @@ const Dashboard: NextPage = () => {
     };
     WalletAddress();
   }, []);
-  useEffect(() => {
-    const FetchBalance = async () => {
-      if (user != null) {
-        const connection = new Connection(clusterApiUrl("devnet"));
-        const balances =
-          (await connection.getBalance(new PublicKey(user?.wallet_address))) /
-          LAMPORTS_PER_SOL;
-        console.log(balances.toString().slice(0, 4));
-        setbalance(balances.toString().slice(0, 4));
-      }
-    };
-    FetchBalance();
-  }, [user?.wallet_address]);
-  console.log(transaction);
+  // useEffect(() => {
+  //   const FetchBalance = async () => {
+  //     if (user != null) {
+  //       const connection = new Connection(clusterApiUrl("devnet"));
+  //       const balances =
+  //         (await connection.getBalance(new PublicKey(user?.wallet_address))) /
+  //         LAMPORTS_PER_SOL;
+  //       console.log(balances.toString().slice(0, 4));
+  //       setbalance(balances.toString().slice(0, 4));
+  //     }
+  //   };
+  //   FetchBalance();
+  // }, [user?.wallet_address]);
+  // console.log(transaction);
 
   return (
     <>
@@ -61,7 +63,7 @@ const Dashboard: NextPage = () => {
             <div>
               <p className="my-2 text-base">Total Balance</p>
               <h1 className="text-4xl font-bold">
-                {balance === null ? "loading..." : balance + " SOL"}
+                {balance === null ? "loading..." : balance + " USDC"}
               </h1>
             </div>
             <button className="w-52 h-12 bg-violet-500 rounded mt-5 text-white font-bold">
